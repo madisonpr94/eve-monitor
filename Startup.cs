@@ -24,6 +24,11 @@ namespace Eve
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddWebOptimizer(pipeline =>
+            {
+                pipeline.CompileScssFiles();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +48,7 @@ namespace Eve
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseWebOptimizer();
 
             app.UseAuthorization();
 
