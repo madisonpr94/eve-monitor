@@ -28,6 +28,9 @@ namespace Eve
             services.AddWebOptimizer(pipeline =>
             {
                 pipeline.CompileScssFiles();
+                pipeline.MinifyJsFiles();
+                pipeline.MinifyCssFiles();
+                pipeline.MinifyHtmlFiles();
             });
         }
 
