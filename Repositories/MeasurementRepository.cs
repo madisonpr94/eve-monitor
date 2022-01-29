@@ -49,23 +49,18 @@ namespace Eve.Repositories
             }
         }
 
-        public IEnumerable<Measurement> TodaysMeasurementsByHour {
+        public IEnumerable<HourlyMeasurement> TodaysMeasurementsByHour {
             get {
                 var yesterday = DateTime.UtcNow.AddDays(-1);
                 var now = DateTime.UtcNow;
 
                 return _context.Measurements.AsEnumerable()
                         .GroupBy(x => x.Timestamp.Hour)
-                        .Select(x => new Measurement {
-                            Timestamp = new DateTime(now.Year,
-                                now.Month,
-                                now.Day,
-                                x.Key,
-                                0,
-                                0
-                            ),
+                        .Select(x => new HourlyMeasurement {
+                            Hour = $"{x.Key}:00",
                             Temp = x.Average(y => y.Temp),
-                            Humidity = x.Average(y => y.Humidity)
+                            Humidity = x.Average(y => y.Humidity),
+                            CO2 = (int)Math.Round(x.Average(y => y.CO2))
                         });
             }
         }

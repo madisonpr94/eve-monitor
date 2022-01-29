@@ -4,10 +4,22 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    Recent average temp: @Model.RecentAvgTemp
-</div>
+@* This is an incredibly simple way of handling Fahrenheit/Celsius switching *@
+@if(!Model.UseFahrenheit)
+{
+    <a href="#" onclick="document.cookie = 'Use-Fahrenheit=true'; location.reload()">Click me for Fahrenheit!</a>
+}
+else
+{
+    <a href="#" onclick="document.cookie = 'Use-Fahrenheit=false'; location.reload()">Click me for Celsius!</a>
+}
+
 <section class="container">
+    <div class="row">
+        @await Html.PartialAsync("~/Views/Graphs/CurrentValue.cshtml", new List<string> { "Temperature", Model.RecentAvgTemp })
+        @await Html.PartialAsync("~/Views/Graphs/CurrentValue.cshtml", new List<string> { "CO₂", Model.RecentAvgCO2 })
+        @await Html.PartialAsync("~/Views/Graphs/CurrentValue.cshtml", new List<string> { "Humidity", Model.RecentAvgHumidity })
+    </div>
     <div class="row">
         @foreach(var graph in Model.DailyGraphs)
         {

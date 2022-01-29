@@ -8,5 +8,7 @@ namespace Eve.Repositories
     {
         public int Count { get; }
         public IEnumerable<Measurement> RecentMeasurements { get; }
+        
+        public IEnumerable<HourlyMeasurement> TodaysMeasurementsByHour { get; }
     }
 }
