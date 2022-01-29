@@ -68,5 +68,13 @@ namespace Eve.Models
                 }
             }
         }
+
+        public bool UseFahrenheit
+        {
+            get; set;
+        } = true;
+
+        public List<Graph> graphs;
+        
     }
 }

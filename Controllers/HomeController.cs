@@ -24,7 +24,10 @@ namespace Eve.Controllers
 
         public IActionResult Index()
         {
-            return View(new Eve.Models.Index(_repository));
+            var model = new Eve.Models.AirStatistics(_repository);
+            model.UseFahrenheit = Request.Cookies["Use-Fahrenheit"] == "true";
+
+            return View(model);
         }
 
         public IActionResult Privacy()
