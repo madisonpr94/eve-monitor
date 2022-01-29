@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +38,13 @@ namespace Eve.Repositories
         public int Count {
             get {
                 return _context.Measurements.Count();
+            }
+        }
+
+        public IEnumerable<Measurement> RecentMeasurements {
+            get {
+                return _context.Measurements.Where(x => 
+                    DateTime.Compare(x.Timestamp, DateTime.UtcNow) >= 0);
             }
         }
     }
