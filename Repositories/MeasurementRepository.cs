@@ -55,7 +55,7 @@ namespace Eve.Repositories
                 var now = DateTime.UtcNow;
 
                 return _context.Measurements.AsEnumerable()
-                        .GroupBy(x => x.Timestamp.Hour)
+                        .GroupBy(x => x.Timestamp.ToLocalTime().Hour)
                         .Select(x => new HourlyMeasurement {
                             Hour = $"{x.Key}:00",
                             Temp = x.Average(y => y.Temp),
