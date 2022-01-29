@@ -3,7 +3,7 @@
 <div class="col-md-4">
     <h1 class="display-5">Example chart.</h1>
     <div>
-        <canvas id="myChart"></canvas>
+        <canvas id="@Model.Id.ToString()"></canvas>
     </div>
 </div>
 
@@ -19,7 +19,7 @@ $('document').ready(function() {
       label: '@(Model.Title)',
       backgroundColor: 'rgb(255, 99, 132)',
       borderColor: 'rgb(255, 99, 132)',
-      data: [0, 10, 5, 2, 20, 30, 45],
+      data: @Model.Data,
     }]
   };
 
@@ -29,8 +29,8 @@ $('document').ready(function() {
     options: {}
   };
 
-  const myChart = new Chart(
-    document.getElementById('myChart'),
+  new Chart(
+    document.getElementById('@Model.Id.ToString()'),
     config
   );
 });

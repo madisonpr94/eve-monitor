@@ -43,8 +43,30 @@ namespace Eve.Repositories
 
         public IEnumerable<Measurement> RecentMeasurements {
             get {
+                var recentTime = DateTime.UtcNow.AddMinutes(-15);
                 return _context.Measurements.Where(x => 
-                    DateTime.Compare(x.Timestamp, DateTime.UtcNow) >= 0);
+                    DateTime.Compare(x.Timestamp, recentTime) >= 0);
+            }
+        }
+
+        public IEnumerable<Measurement> TodaysMeasurementsByHour {
+            get {
+                var yesterday = DateTime.UtcNow.AddDays(-1);
+                var now = DateTime.UtcNow;
+
+                return _context.Measurements.AsEnumerable()
+                        .GroupBy(x => x.Timestamp.Hour)
+                        .Select(x => new Measurement {
+                            Timestamp = new DateTime(now.Year,
+                                now.Month,
+                                now.Day,
+                                x.Key,
+                                0,
+                                0
+                            ),
+                            Temp = x.Average(y => y.Temp),
+                            Humidity = x.Average(y => y.Humidity)
+                        });
             }
         }
     }

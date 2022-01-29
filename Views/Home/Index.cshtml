@@ -1,4 +1,4 @@
-﻿@model Eve.Models.Index
+﻿@model Eve.Models.AirStatistics
 
 @{
     ViewData["Title"] = "Home Page";
@@ -9,9 +9,9 @@
 </div>
 <section class="container">
     <div class="row">
-        @for(int i = 0; i < 1; i++)
+        @foreach(var graph in Model.DailyGraphs)
         {
-            @await Html.PartialAsync("~/Views/Graphs/Graph.cshtml", new Eve.Models.Graph());
+            @await Html.PartialAsync("~/Views/Graphs/Graph.cshtml", graph);
         }
     </div>
 </section>
