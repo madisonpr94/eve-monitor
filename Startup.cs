@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+using Eve.Repositories;
+
 namespace Eve
 {
     public class Startup
@@ -32,6 +34,10 @@ namespace Eve
                 pipeline.MinifyCssFiles();
                 pipeline.MinifyHtmlFiles();
             });
+
+            services.AddSingleton<IConfiguration>(Configuration);
+
+            services.AddSingleton<IMeasurementRepository, MeasurementRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

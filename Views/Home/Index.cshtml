@@ -1,12 +1,17 @@
-﻿@{
+﻿@model Eve.Models.Index
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
+<div class="text-center">
+    @Model.Count
+</div>
 <section class="container">
     <div class="row">
         @for(int i = 0; i < 3; i++)
         {
-            @await Html.PartialAsync("~/Views/Graphs/Graph.cshtml");
+            @await Html.PartialAsync("~/Views/Graphs/Graph.cshtml", new Eve.Models.Graph());
         }
     </div>
 </section>
