@@ -26,6 +26,8 @@ namespace Eve.Repositories
 
     public class MeasurementRepository : IMeasurementRepository
     {
+        private const int RECENT_MINUTES = 15;
+
         IConfiguration _configuration;
         MeasurementContext _context;
 
@@ -41,9 +43,14 @@ namespace Eve.Repositories
             }
         }
 
+        /// <summary>
+        /// Returns an enumeration of recent measurements, controlled by the
+        /// const RECENT_MINUTES defined above.
+        /// </summary>
+
         public IEnumerable<Measurement> RecentMeasurements {
             get {
-                var recentTime = DateTime.UtcNow.AddMinutes(-15);
+                var recentTime = DateTime.UtcNow.AddMinutes(-RECENT_MINUTES);
                 return _context.Measurements.Where(x => 
                     DateTime.Compare(x.Timestamp, recentTime) >= 0);
             }
@@ -55,9 +62,10 @@ namespace Eve.Repositories
                 var now = DateTime.UtcNow;
 
                 return _context.Measurements.AsEnumerable()
-                        .GroupBy(x => x.Timestamp.ToLocalTime().Hour)
+                        .Where(x => x.Timestamp >= yesterday)
+                        .GroupBy(x => x.Timestamp.Hour)
                         .Select(x => new HourlyMeasurement {
-                            Hour = $"{x.Key}:00",
+                            Timestamp = x.Select(y => y.Timestamp).First(),
                             Temp = x.Average(y => y.Temp),
                             Humidity = x.Average(y => y.Humidity),
                             CO2 = (int)Math.Round(x.Average(y => y.CO2))

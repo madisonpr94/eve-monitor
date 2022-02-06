@@ -31,8 +31,7 @@ namespace Eve.Models
                 if (recentMeasurements.Count() != 0)
                 {
                     float avgTemp = recentMeasurements
-                        .Select(x => UseFahrenheit ? 
-                                    ConvertTempToFahrenheit(x.Temp) : x.Temp)
+                        .Select(x => UseFahrenheit ? x.Temperatures.Fahrenheit : x.Temperatures.Celsius)
                         .Average();
                     return Math.Round(avgTemp).ToString("N0") + TempUnit;
                 }
@@ -102,10 +101,10 @@ namespace Eve.Models
             {
                 var measurements = _repository.TodaysMeasurementsByHour;
 
-                var hours = measurements.Select(x => x.Hour)
+                var hours = measurements.Select(x => x.FormattedTimestamp)
                                         .ToList();
-                var tempReadings = measurements.Select(x => x.Temp)
-                                        .Select(x => UseFahrenheit ? ConvertTempToFahrenheit(x) : x)
+                var tempReadings = measurements.Select(x => x.Temperatures)
+                                        .Select(x => UseFahrenheit ? x.Celsius : x.Fahrenheit)
                                         .Select(x => (int)Math.Round(x))
                                         .ToList();
                 var co2Readings = measurements.Select(x => x.CO2)
@@ -163,9 +162,10 @@ namespace Eve.Models
             {
                 var measurements = _repository.TodaysMeasurementsByHour;
 
-                var hours = measurements.Select(x => x.Hour)
+                var hours = measurements.Select(x => x.FormattedTimestamp)
                                         .ToList();
-                var tempReadings = measurements.Select(x => x.Temp)
+                var tempReadings = measurements.Select(x => x.Temperatures)
+                                        .Select(x => UseFahrenheit ? x.Celsius : x.Fahrenheit)
                                         .Select(x => (int)Math.Round(x))
                                         .ToList();
                 var co2Readings = measurements.Select(x => x.CO2)

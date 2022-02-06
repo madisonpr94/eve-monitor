@@ -2,11 +2,12 @@ using System;
 
 namespace Eve.Models
 {
-    public class HourlyMeasurement
+    public class HourlyMeasurement : Measurement
     {
-        public string Hour { get; set; }
-        public int CO2 { get; set; }
-        public float Temp { get; set; }
-        public float Humidity { get; set; }
+        public override string FormattedTimestamp {
+            get {
+                return Timestamp.ToLocalTime().ToString("HH:00");
+            }
+        }
     }
 }
