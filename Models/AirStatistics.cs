@@ -99,7 +99,7 @@ namespace Eve.Models
         {
             get
             {
-                var measurements = _repository.TodaysMeasurementsByHour;
+                var measurements = _repository.DailyMeasurementsByHour;
 
                 var hours = measurements.Select(x => x.FormattedTimestamp)
                                         .ToList();
@@ -160,7 +160,7 @@ namespace Eve.Models
         {
             get
             {
-                var measurements = _repository.TodaysMeasurementsByHour;
+                var measurements = _repository.DailyMeasurementsByHour;
 
                 var hours = measurements.Select(x => x.FormattedTimestamp)
                                         .ToList();

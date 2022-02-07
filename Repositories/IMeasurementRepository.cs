@@ -9,6 +9,7 @@ namespace Eve.Repositories
         public int Count { get; }
         public IEnumerable<Measurement> RecentMeasurements { get; }
         
-        public IEnumerable<HourlyMeasurement> TodaysMeasurementsByHour { get; }
+        public IEnumerable<HourlyMeasurement> DailyMeasurementsByHour { get; }
+        public IEnumerable<DailyMeasurement> MonthlyMeasurementsByDay { get; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -25,12 +26,12 @@ namespace Eve.Controllers
 
         [HttpGet]
         [Route("api/airquality")]
+        [EnableCors("AllowAnyPolicy")]
         [ProducesResponseType(Microsoft.AspNetCore.Http.StatusCodes.Status200OK)]
         [ProducesResponseType(Microsoft.AspNetCore.Http.StatusCodes.Status503ServiceUnavailable)]
         public IActionResult AirQuality()
         {
             AirQuality data = new AirQuality(_repository);
-
             return new JsonResult(data);
         }
     }

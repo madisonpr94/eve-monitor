@@ -35,6 +35,13 @@ namespace Eve
                 pipeline.MinifyHtmlFiles();
             });
 
+            services.AddCors(o => o.AddPolicy("AllowAnyPolicy", builder =>
+            {
+                builder.WithOrigins("*")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+            }));
+
             services.AddSingleton<IConfiguration>(Configuration);
 
             services.AddSingleton<IMeasurementRepository, MeasurementRepository>();
@@ -58,6 +65,8 @@ namespace Eve
 
             app.UseRouting();
             app.UseWebOptimizer();
+
+            app.UseCors();
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {

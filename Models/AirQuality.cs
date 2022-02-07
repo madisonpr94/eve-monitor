@@ -93,14 +93,20 @@ namespace Eve.Models
         {
             get
             {
-                var today = _repository.TodaysMeasurementsByHour;
-
+                var today = _repository.DailyMeasurementsByHour;
                 return today;
             }
         }
         #endregion
         #region Historic values - last 30 days
-
+        public IEnumerable<Measurement> ThisMonthsMeasurements
+        {
+            get
+            {
+                var thisMonth = _repository.MonthlyMeasurementsByDay;
+                return thisMonth;
+            }
+        }
         #endregion
         #region Historic values - last year
 

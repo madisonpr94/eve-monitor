@@ -56,20 +56,37 @@ namespace Eve.Repositories
             }
         }
 
-        public IEnumerable<HourlyMeasurement> TodaysMeasurementsByHour {
+        public IEnumerable<HourlyMeasurement> DailyMeasurementsByHour {
             get {
                 var yesterday = DateTime.UtcNow.AddDays(-1);
                 var now = DateTime.UtcNow;
 
                 return _context.Measurements.AsEnumerable()
-                        .Where(x => x.Timestamp >= yesterday)
-                        .GroupBy(x => x.Timestamp.Hour)
+                        .Where(x => x.Timestamp.ToLocalTime() >= yesterday)
+                        .GroupBy(x => x.Timestamp.ToLocalTime().Hour)
                         .Select(x => new HourlyMeasurement {
                             Timestamp = x.Select(y => y.Timestamp).First(),
                             Temp = x.Average(y => y.Temp),
                             Humidity = x.Average(y => y.Humidity),
                             CO2 = (int)Math.Round(x.Average(y => y.CO2))
                         });
+            }
+        }
+
+        public IEnumerable<DailyMeasurement> MonthlyMeasurementsByDay {
+            get {
+                var lastMonth = DateTime.UtcNow.AddDays(-31);
+
+                return _context.Measurements.AsEnumerable()
+                            .Where(x => x.Timestamp.ToLocalTime() >= lastMonth)
+                            .GroupBy(x => x.Timestamp.ToLocalTime().DayOfYear)
+                            .Select(x => new DailyMeasurement
+                            {
+                                Timestamp = x.Select(y => y.Timestamp).First(),
+                                Temp = x.Average(y => y.Temp),
+                                Humidity = x.Average(y => y.Humidity),
+                                CO2 = (int)Math.Round(x.Average(y => y.CO2))
+                            });
             }
         }
     }
