@@ -1,50 +1,61 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Eve</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.scss" />
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Eve</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - Eve - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+  <head>
+    <title>Eve</title>
+    <link rel="stylesheet" href="~/css/bundle.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body class="mdc-typography">
+    <!--menu bar-->
+    <div id="menu" class="mdc-elevation--z4">
+      <div class="row">
+        <div class="left" id="centered">
+          <div><p class="mdc-typography--headline5">Eve</p></div>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
+        <div class="right" id="centered">
+          <div class="mdc-segmented-button mdc-segmented-button--single-select" role="radiogroup">
+            <button id="daily-button" class="mdc-segmented-button__segment mdc-segmented-button__segment--selected" role="radio" aria-checked="true">
+              <div class="mdc-segmented-button__ripple"></div>
+              <div class="mdc-segmented-button__label">Daily</div>
+            </button>
+            <button id="monthly-button" class="mdc-segmented-button__segment" role="radio" aria-checked="false">
+              <div class="mdc-segmented-button__ripple"></div>
+              <div class="mdc-segmented-button__label">Monthly</div>
+            </button>
+          </div>
+        </div>
+        <div class="right" id="centered">
+          <button id="temp-toggle" class="mdc-switch mdc-switch--selected" type="button" role="switch" aria-checked="true">
+            <div class="mdc-switch__track"></div>
+            <div class="mdc-switch__handle-track">
+              <div class="mdc-switch__handle">
+                <div class="mdc-switch__shadow">
+                  <div class="mdc-elevation-overlay"></div>
+                </div>
+                <div class="mdc-switch__ripple"></div>
+                <div class="mdc-switch__icons">
+                  <svg class="mdc-switch__icon mdc-switch__icon--on" viewBox="0 0 24 24">
+                    <path d="M19.69,5.23L8.96,15.96l-4.23-4.23L2.96,13.5l6,6L21.46,7L19.69,5.23z" />
+                  </svg>
+                  <svg class="mdc-switch__icon mdc-switch__icon--off" viewBox="0 0 24 24">
+                    <path d="M20 13H4v-2h16v2z" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </button>
+          <label for="temp-toggle"> Freedom Units</label>
+        </div>
+      </div>
+    </div>
+    @RenderBody()
+    <!--webpack js src-->
+    <script src="~/js/bundle.js" async></script>
+    <footer style="margin: 32px; font-family: 'Roboto'; text-align: center;">
+        <p>design by anchovie</p>
+        <p><a href="https://anchovie.laminar.graphics">anchovie.laminar.graphics</a></p>
+    </footer> 
+  </body>
 </html>
