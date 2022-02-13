@@ -1,29 +1,27 @@
-﻿@model Eve.Models.AirStatistics
-
-@{
-    ViewData["Title"] = "Home Page";
-}
-
-@* This is an incredibly simple way of handling Fahrenheit/Celsius switching *@
-@if(!Model.UseFahrenheit)
-{
-    <a href="#" onclick="document.cookie = 'Use-Fahrenheit=true'; location.reload()">Click me for Fahrenheit!</a>
-}
-else
-{
-    <a href="#" onclick="document.cookie = 'Use-Fahrenheit=false'; location.reload()">Click me for Celsius!</a>
-}
-
-<section class="container">
-    <div class="row">
-        @await Html.PartialAsync("~/Views/Graphs/CurrentValue.cshtml", new List<string> { "Temperature", Model.RecentAvgTemp })
-        @await Html.PartialAsync("~/Views/Graphs/CurrentValue.cshtml", new List<string> { "CO₂", Model.RecentAvgCO2 })
-        @await Html.PartialAsync("~/Views/Graphs/CurrentValue.cshtml", new List<string> { "Humidity", Model.RecentAvgHumidity })
+﻿<!--main card-->
+    <div id="card" class="mdc-elevation--z1">
+      <div class="row">
+        <div class="column">
+          <p class="mdc-typography--overline">temperature</p>
+          <p><span class="xl-temp">XX&#176;</span><span class="degree"> Fahrenheit</span></p>
+        </div>
+        <div class="column">
+          <p class="mdc-typography--overline">co2 concentration</p>
+          <p><span class="xl-co2">XXX</span><span class="unit"> ppm CO2</span></p>
+        </div>
+        <div class="column">
+          <p class="mdc-typography--overline">humidity</p>
+          <p><span class="xl-humidity">XX%</span><span class="unit"> RH</span></p>
+        </div>
+      </div>
+      <!--graphs-->
+      <div class="graph">
+        <canvas id="temp-graph"></canvas>
+      </div>
+      <div class="graph">
+        <canvas id="co2-graph"></canvas>
+      </div>
+      <div class="graph">
+        <canvas id="humidity-graph"></canvas>
+      </div>
     </div>
-    <div class="row">
-        @foreach(var graph in Model.DailyGraphs)
-        {
-            @await Html.PartialAsync("~/Views/Graphs/Graph.cshtml", graph);
-        }
-    </div>
-</section>
